@@ -68,6 +68,17 @@ hr {
     position: relative;
     margin: auto;
 }
+
+.hangman-draw .the-stand .stand-detail {
+    width: 10px;
+    height: 10px;
+    background-color: #000000;
+    border-radius: 50%;
+    position: absolute;
+    top: 12px;
+    left: 25px;
+    z-index: 1;
+}
 .hangman-draw .the-stand:before {
     content: "";
     position: absolute;
@@ -77,13 +88,24 @@ hr {
     left: 50%;
     margin-left: -2px;
 }
+.hangman-draw .the-stand::after {
+    content: "";
+    position: absolute;
+    width: 70px;
+    background-color: #222;
+    height: 5px;
+    transform: rotate(-45deg);
+    top: 30px;
+    left: 10px;
+    margin-left: -2px;
+}
 .hangman-draw .the-hang:before {
     content: "";
     position: absolute;
     height: 4px;
     background-color: #222;
-    width: 100px;
-    left: 30px;
+    width: 120px;
+    left: 12px;
     top: 15px;
 }
 .hangman-draw .the-hang:after {
@@ -185,8 +207,50 @@ hr {
     border-radius: 4px;
 }
 
+.letters .letter-box.clicked {
+    background-color: #222;
+    opacity: 0.5;
+    pointer-events: none;
+}
 
+.letters-guess {
+    margin: 10px auto;
+    background-color: #F8F8F8;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    min-height: 104px;
+}
 
+.letters-guess span {
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    margin-right: 10px;
+    text-align: center;
+    line-height: 60px;
+    text-transform: uppercase;
+    font-weight: bold;
+    background-color: #FDFDFD;
+    border-bottom: 3px solid #222;
+}
+
+.letters-guess span.with-space {
+    background: none;
+    border-bottom: none;
+    position: relative;
+}
+
+.letters-guess span.with-space::before {
+    content: "";
+    width: 20px;
+    height: 4px;
+    background-color: #009688;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
 /* Animations */
 @keyframes rope-swing {
   0% {
