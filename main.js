@@ -1,3 +1,6 @@
+let gameName = "Hangman Game";
+document.title = gameName;
+
 // Letters
 const letters = "abcdefghijklmnopqrstuvwxyz";
 
@@ -174,7 +177,7 @@ let randomValueNumber = Math.floor(Math.random() * randomPropertyValue.length);
 
 // The Chosen Word
 let randomValue = randomPropertyValue[randomValueNumber];
-
+console.log(randomValue);
 // Set Category Info
 document.querySelector(".game-info .category span").innerHTML = randomPropertyName;
 
@@ -203,11 +206,16 @@ arrayOfLetters.forEach(letter => {
 // Select Guess Spans
 let guessSpans = document.querySelectorAll(".letters-guess span");
 
-// Set Game Status
-let theStatus = false;
+// Set Wrong Attempts
+let wrongAttempts = 0;
+
+// Slect The Draw Element
+let theDraw = document.querySelector(".hangman-draw")
 
 // Handle Clicking On Letters
 document.addEventListener("click", (e) => {
+    // Set Game Status
+    let theStatus = false;
     if (e.target.className === "letter-box") {
 
         e.target.classList.add("clicked");
@@ -215,19 +223,101 @@ document.addEventListener("click", (e) => {
         // Get Clicked Letter
         let theClickedLetter = e.target.innerHTML.toLowerCase();
 
-        console.log(arrayOfLetters);
-
         arrayOfLetters.forEach((wordLetter, index) => {
 
-            // Set Status To Correct
-            theStatus = true;
 
             // Check If The Word Contains The Chosen Letter
             if (theClickedLetter === wordLetter) {
 
+                // Set Status To Correct
+                theStatus = true;
+
                 guessSpans[index].innerHTML = theClickedLetter;
+                guessSpans.forEach(span => {
+                    if (span.innerHTML.length === 1) {
+                        span.classList.add("full");
+                    }
+                })
+            }
+        });
+        
+        let counter = 0;
+        guessSpans.forEach(span => {
+            if (span.innerHTML.length === 1) {
+                counter++;
             }
         });
 
+        if (counter === arrayOfLetters.length) {
+
+            endGame(true);
+
+        }
+        
+        // If letter Is Wrong
+        if (theStatus !== true) {
+
+            // Increase The Wrong Attempts
+            wrongAttempts++;
+
+            // Add Class Wrong On The Draw Element
+            theDraw.classList.add(`wrong-${wrongAttempts}`);
+
+            // Play Fail Sound
+            document.getElementById("fail").play();
+
+
+
+            if (wrongAttempts === 8) {
+
+                endGame(false);
+
+            }
+
+        } else {
+
+            // Play Sucess Sound
+            document.getElementById("sucess").play();
+
+        }
+
     }
-})
+});
+
+// End Game Function
+
+function endGame(bool) {
+    // Disable Letters Container
+    lettersContainer.classList.add("finished")
+
+    // Container Div
+    let containerDiv = document.querySelector(".container");
+
+    // Create Popup Div
+    let div = document.createElement("div");
+
+    let popupDivText = document.createElement("div");
+
+    let divText;
+    if (bool) {
+        // Div Text Node
+        divText.innerHTML = `Victory after ${wrongAttempts} tries, Well done!`;
+    } else {
+        divText = document.createTextNode(`Game Over, The Word Was ${randomValue}`);
+    }
+
+    popupDivText.appendChild(divText);
+    popupDivText.className = "popup-text"
+    div.appendChild(popupDivText);
+    div.className = "popup";
+
+    containerDiv.appendChild(div);
+
+
+    // Scroll To The Bottom Of The Page So That The Uses Sees The Message
+    window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: 'smooth'
+    });
+
+}
