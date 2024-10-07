@@ -495,6 +495,10 @@ function endGame(bool) {
     reloadBtn = document.querySelectorAll("i");
     reloadBtn[1].onclick = function () {
         window.location.reload();
+        window.scrollTo({
+            top: 0
+        });
+
     }
 
 
