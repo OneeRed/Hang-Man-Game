@@ -9,15 +9,12 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
-    font-family: Cursive;
     position: relative;
-    /* background: linear-gradient(#18222a 14%, #0b1014, #18222a 48%); */
-    /* background: linear-gradient(to bottom, #130128 10%, #270251 50%, #43048e24 100%); */
     background: rgb(1,0,24);
     background: radial-gradient(circle, rgb(1 0 24 / 93%) 0%, rgba(25,37,47,1) 50%, rgba(1,0,24,1) 100%);  
     min-height: 100vh;
+    font-family: "Sriracha", cursive;
 }
 
 ::-webkit-scrollbar {
